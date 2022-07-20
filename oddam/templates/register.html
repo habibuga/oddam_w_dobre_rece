@@ -1,21 +1,8 @@
 {% extends 'base.html' %}
 {% block header %}
 <header>
-      <nav class="container container--70">
-        <ul class="nav--actions">
-          <li><a href="#">Zaloguj</a></li>
-          <li class="highlighted"><a href="#">Załóż konto</a></li>
-        </ul>
-
-        <ul>
-          <li><a href="{% url 'start' %}" class="btn btn--without-border active">Start</a></li>
-          <li><a href="{% url 'start' %}#steps" class="btn btn--without-border">O co chodzi?</a></li>
-          <li><a href="{% url 'start' %}#about-us" class="btn btn--without-border">O nas</a></li>
-          <li><a href="{% url 'start' %}#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-          <li><a href="{% url 'start' %}#contact" class="btn btn--without-border">Kontakt</a></li>
-        </ul>
-      </nav>
-    </header>
+    {{ block.super }}
+</header>
 
 {% endblock %}
 

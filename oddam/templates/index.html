@@ -83,8 +83,7 @@
 
         <ul class="help--slides-items">
 
-            {% for charity in charities %}
-            {% if charity.type == 1 %}
+            {% for charity in charities_found %}
           <li>
             <div class="col">
               <div class="title">{{ charity.name }}</div>
@@ -93,9 +92,28 @@
 
             <div class="col"><div class="text">{{ charity.category_names }}</div></div>
           </li>
-            {% endif %}
             {% endfor %}
         </ul>
+      
+      
+        {% if charities_found.has_other_pages %}
+
+            <ul class="help--slides-pagination">
+
+            {% for i in charities_found.paginator.page_range %}
+              {% if charities_found.number == i %}
+                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border active" data-page="{{ i }}">{{ i }}</a></li>
+                {% else %}
+{#                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>#}
+                <li><a href="?page={{ i }}#help" data-page="{{ i }}">{{ i }}</a></li>
+
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+        {% endif %}
+
+
         <!-- Pagination
         <ul class="help--slides-pagination">
           <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
@@ -113,8 +131,7 @@
         </p>
         <ul class="help--slides-items">
 
-            {% for charity in charities %}
-            {% if charity.type == 2 %}
+            {% for charity in charities_ngo %}
           <li>
             <div class="col">
               <div class="title">{{ charity.name }}</div>
@@ -123,19 +140,28 @@
 
             <div class="col"><div class="text">{{ charity.category_names }}</div></div>
           </li>
-            {% endif %}
             {% endfor %}
         </ul>
+      
+      
+      {% if charities_ngo.has_other_pages %}
 
-        <!-- Pagination
-        <ul class="help--slides-pagination">
-          <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="3">3</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="4">4</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="5">5</a></li>
-        </ul>
-        -->
+            <ul class="help--slides-pagination">
+
+            {% for i in charities_ngo.paginator.page_range %}
+              {% if charities_ngo.number == i %}
+                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border active" data-page="{{ i }}">{{ i }}</a></li>
+                {% else %}
+{#                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>#}
+                <li><a href="?page={{ i }}#help" data-page="{{ i }}">{{ i }}</a></li>
+
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+        {% endif %}
+
+
       </div>
 
       <!-- SLIDE 3 -->
@@ -143,8 +169,7 @@
         <p>W naszej bazie znajdziesz listę zweryfikowanych Lokalnych Zbiórek, z którymi współpracujemy. Możesz sprawdzić czym się zajmują, komu pomagają i czego potrzebują.</p>
         <ul class="help--slides-items">
 
-            {% for charity in charities %}
-            {% if charity.type == 3 %}
+            {% for charity in charities_coll %}
           <li>
             <div class="col">
               <div class="title">{{ charity.name }}</div>
@@ -153,16 +178,26 @@
 
             <div class="col"><div class="text">{{ charity.category_names }}</div></div>
           </li>
-            {% endif %}
             {% endfor %}
         </ul>
+      
+      {% if charities_coll.has_other_pages %}
 
-        <!-- Pagination
-        <ul class="help--slides-pagination">
-          <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
-        </ul>
-        -->
+            <ul class="help--slides-pagination">
+
+            {% for i in charities_coll.paginator.page_range %}
+              {% if charities_coll.number == i %}
+                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border active" data-page="{{ i }}">{{ i }}</a></li>
+                {% else %}
+{#                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>#}
+                <li><a href="?page={{ i }}#help" data-page="{{ i }}">{{ i }}</a></li>
+
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+        {% endif %}
+
       </div>
     </section>
 {% endblock %}

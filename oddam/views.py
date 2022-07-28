@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
@@ -87,3 +87,9 @@ class Login(View):
                     'form': form
                 }
                 return render(request=request, template_name='login.html', context=ctx)
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('login')

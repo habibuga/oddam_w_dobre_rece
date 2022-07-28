@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block header %}
+<header>
+    {{ block.super }}
+</header>
+
+{% endblock %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <th>Imie</th>
+            <td>{{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <th>Nazwisko</th>
+            <td>{{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ user.username }}</td>
+        </tr>
+    </table>
+
+{% endblock %}

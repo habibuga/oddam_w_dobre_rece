@@ -132,3 +132,10 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('login')
+
+
+class UserProfileView(LoginRequiredMixin, View):
+    login_url = 'login'
+
+    def get(self, request):
+        return render(request=request, template_name="user_profile.html")

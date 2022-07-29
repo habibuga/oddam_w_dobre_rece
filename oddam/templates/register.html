@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block header %}
+<header>
+    {{ block.super }}
+</header>
+
+{% endblock %}
+
+{% block content %}
+
+    <section class="login-page">
+      <h2>Załóż konto</h2>
+      <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+           {{ field }}
+        </div>
+        {% endfor %}
+
+        <div class="form-group form-group--buttons">
+          <a href="{% url 'login' %}" class="btn btn--without-border">Zaloguj się</a>
+          <button class="btn" type="submit">Załóż konto</button>
+        </div>
+      </form>
+    </section>
+
+{% endblock %}

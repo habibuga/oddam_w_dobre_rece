@@ -63,10 +63,11 @@ class AddDonation(LoginRequiredMixin, View):
         user_don = request.user
         cat_list = [Category.objects.get(pk=cat) for cat in categories]
         institution = Institution.objects.get(pk=org)
-        new_donation = Donation.objects.create(quantity=bags, categories=cat_list, institution=institution,
+        new_donation = Donation.objects.create(quantity=bags, institution=institution,
                                                address=address, phone_number=phone_number, city=city, zip_code=zip_code,
                                                pick_up_date=pick_up_date, pick_up_time=pick_up_time,
                                                pick_up_comment=pick_up_comment, user=user_don)
+        new_donation.categories.add(categories)
         new_donation.save()
         return redirect('donation_confirmation')
 
@@ -138,4 +139,8 @@ class UserProfileView(LoginRequiredMixin, View):
     login_url = 'login'
 
     def get(self, request):
-        return render(request=request, template_name="user_profile.html")
+        donations = Donation.objects.filter(user=request.user)
+        ctx = {
+            "donations": donations
+        }
+        return render(request=request, template_name="user_profile.html", context=ctx)

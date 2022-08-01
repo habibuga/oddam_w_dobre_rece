@@ -24,6 +24,9 @@ class Institution(models.Model):
     def category_names(self):
         return ', '.join([c.name for c in self.categories.all()])
 
+    def category_ids(self):
+        return ', '.join([str(c.pk) for c in self.categories.all()])
+
     def __str__(self):
         return self.name
 
@@ -44,6 +47,7 @@ class Donation(models.Model):
     pick_up_time = models.TimeField(verbose_name="godzina odbioru")
     pick_up_comment = models.CharField(max_length=500, verbose_name="komentarz")
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name="darczyńca")
+    is_taken = models.BooleanField(default=False)
 
     def category_names(self):
         return ', '.join([c.name for c in self.categories.all()])

@@ -31,6 +31,7 @@
             <th>Organizacja</th>
             <th>Kategorie</th>
             <th>Ilość worków</th>
+            <th>Status darowizny</th>
         </tr>
         {% for don in donations %}
         <tr>
@@ -38,7 +39,18 @@
             <td>{{ don.institution }}</td>
             <td>{{ don.category_names }}</td>
             <td>{{ don.quantity }}</td>
-        </tr>
+            <td>
+                {% if don.is_taken == False %}
+                    nieodebrane
+                {% else %}
+                    odebrane
+                {% endif %}
+                <form method="post">
+                {% csrf_token %}
+                    <button type="submit" value="{{ don.pk }}" name="don_status">Zmień status</button>
+                </form>
+            </td>
+            </tr>
         {% endfor %}
     </table>
 

@@ -64,6 +64,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const page = e.target.dataset.page;
 
       console.log(page);
+      fetch(`?page=${page}#help`).then((response) => {
+        return response.text()
+      }).then((response) => {
+        console.log(response)
+      })
     }
   }
   const helpSection = document.querySelector(".help");
@@ -234,6 +239,26 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 6;
       this.$step.parentElement.hidden = this.currentStep >= 6;
 
+      this.catBoxes = form.querySelectorAll('input[name="categories"]:checked')
+      this.catValues = [];
+      this.catBoxes.forEach((checkbox) => {
+        this.catValues.push(checkbox.value);
+      })
+      console.log(this.catValues);
+
+      this.org = form.querySelectorAll("[data-category]");
+      this.org.forEach((el) => {
+        el.style.display = "inherit"
+      })
+      this.org.forEach((elem) => {
+        this.catValues.forEach((cat) => {
+          if (elem.dataset.category.includes(cat) === false) {
+            elem.style.display = "none"
+          }
+        })
+      })
+      console.log(this.org);
+
       // TODO: get data from inputs and show them in summary
     }
 
@@ -243,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
      * TODO: validation, send data to server
      */
     submit(e) {
-      e.preventDefault();
+      // e.preventDefault();
       this.currentStep++;
       this.updateForm();
     }

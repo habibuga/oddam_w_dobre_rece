@@ -61,14 +61,34 @@ document.addEventListener("DOMContentLoaded", function() {
      */
     changePage(e) {
       e.preventDefault();
+      e.target.parentElement.parentElement.childNodes.forEach(elem => {
+        if (elem.tagName === "LI") {
+          elem.firstChild.classList.remove("active");
+        }
+      });
+
+      e.target.classList.add('active');
       const page = e.target.dataset.page;
 
       console.log(page);
-      fetch(`?page=${page}#help`).then((response) => {
+
+      if (this.currentSlide === "1") {
+        fetch(`fundacja/${page}/`).then((response) => {
         return response.text()
       }).then((response) => {
-        console.log(response)
-      })
+        e.target.parentElement.parentElement.parentElement.children[1].innerHTML=response;
+      }) } else if (this.currentSlide === "2") {
+        fetch(`ngo/${page}/`).then((response) => {
+        return response.text()
+      }).then((response) => {
+        e.target.parentElement.parentElement.parentElement.children[1].innerHTML=response;
+        }) } else {
+        fetch(`zbiorka/${page}/`).then((response) => {
+        return response.text()
+      }).then((response) => {
+        e.target.parentElement.parentElement.parentElement.children[1].innerHTML=response;
+        })
+      }
     }
   }
   const helpSection = document.querySelector(".help");

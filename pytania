@@ -7,3 +7,5 @@ dodac style do user-profile.html / lepiej zrobic na div
 
 jankowalski1234@gmail.com Oddam1234
 
+Paginator powinien miec osobny widok, js fetchem pobiera dane z Paginatora i laduje html do widoku LandingPage
+

@@ -36,6 +36,39 @@ class LandingPage(View):
         return render(request=request, template_name='index.html', context=ctx)
 
 
+class FoundationPages(View):
+    def get(self, request, page):
+        charities_found = Institution.objects.filter(type=1)
+        paginator_found = Paginator(charities_found, 5)
+        charities_found_p = paginator_found.get_page(page)
+        ctx = {
+            "charities_found": charities_found_p,
+        }
+        return render(request=request, template_name="foundations.html", context=ctx)
+
+
+class NGOPages(View):
+    def get(self, request, page):
+        charities_ngo = Institution.objects.filter(type=2)
+        paginator_ngo = Paginator(charities_ngo, 5)
+        charities_ngo_p = paginator_ngo.get_page(page)
+        ctx = {
+            "charities_ngo": charities_ngo_p,
+        }
+        return render(request=request, template_name="ngo.html", context=ctx)
+    
+
+class CollectionPages(View):
+    def get(self, request, page):
+        charities_collection = Institution.objects.filter(type=3)
+        paginator_collection = Paginator(charities_collection, 5)
+        charities_collection_p = paginator_collection.get_page(page)
+        ctx = {
+            "charities_collection": charities_collection_p,
+        }
+        return render(request=request, template_name="collection.html", context=ctx)
+
+
 class AddDonation(LoginRequiredMixin, View):
     login_url = 'login'
     # redirect_field_name = 'redirect_to'

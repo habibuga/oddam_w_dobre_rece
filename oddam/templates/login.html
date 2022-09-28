@@ -8,11 +8,11 @@
         </ul>
 
         <ul>
-          <li><a href="#">Start</a></li>
-          <li><a href="#">O co chodzi?</a></li>
-          <li><a href="#">O nas</a></li>
-          <li><a href="#">Fundacje i organizacje</a></li>
-          <li><a href="#">Kontakt</a></li>
+          <li><a href="{% url 'start' %}" class="btn btn--without-border active">Start</a></li>
+          <li><a href="{% url 'start' %}#steps" class="btn btn--without-border">O co chodzi?</a></li>
+          <li><a href="{% url 'start' %}#about-us" class="btn btn--without-border">O nas</a></li>
+          <li><a href="{% url 'start' %}#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+          <li><a href="{% url 'start' %}#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
       </nav>
     </header>

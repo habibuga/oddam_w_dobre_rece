@@ -1,8 +1,11 @@
+from django.contrib.auth import authenticate, login, get_user_model
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import NewUserForm
+from .forms import NewUserForm, LoginForm
 from .models import Donation, Institution
+
+User = get_user_model()
 
 
 class LandingPage(View):
@@ -61,4 +64,26 @@ class Register(View):
 
 class Login(View):
     def get(self, request):
-        return render(request=request, template_name='login.html')
+        form = LoginForm()
+        ctx = {
+            "form": form
+        }
+        return render(request=request, template_name='login.html', context=ctx)
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user_login = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=user_login, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('start')
+            elif not User.objects.filter(username=user_login).exists():
+                return redirect('registration')
+            else:
+                form.add_error(None, 'Niepoprawny login lub hasło!')
+                ctx = {
+                    'form': form
+                }
+                return render(request=request, template_name='login.html', context=ctx)

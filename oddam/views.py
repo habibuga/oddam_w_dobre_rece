@@ -36,6 +36,39 @@ class LandingPage(View):
         return render(request=request, template_name='index.html', context=ctx)
 
 
+class FoundationPages(View):
+    def get(self, request, page):
+        charities_found = Institution.objects.filter(type=1)
+        paginator_found = Paginator(charities_found, 5)
+        charities_found_p = paginator_found.get_page(page)
+        ctx = {
+            "charities_found": charities_found_p,
+        }
+        return render(request=request, template_name="foundations.html", context=ctx)
+
+
+class NGOPages(View):
+    def get(self, request, page):
+        charities_ngo = Institution.objects.filter(type=2)
+        paginator_ngo = Paginator(charities_ngo, 5)
+        charities_ngo_p = paginator_ngo.get_page(page)
+        ctx = {
+            "charities_ngo": charities_ngo_p,
+        }
+        return render(request=request, template_name="ngo.html", context=ctx)
+    
+
+class CollectionPages(View):
+    def get(self, request, page):
+        charities_collection = Institution.objects.filter(type=3)
+        paginator_collection = Paginator(charities_collection, 5)
+        charities_collection_p = paginator_collection.get_page(page)
+        ctx = {
+            "charities_collection": charities_collection_p,
+        }
+        return render(request=request, template_name="collection.html", context=ctx)
+
+
 class AddDonation(LoginRequiredMixin, View):
     login_url = 'login'
     # redirect_field_name = 'redirect_to'
@@ -51,24 +84,15 @@ class AddDonation(LoginRequiredMixin, View):
 
     def post(self, request):
         categories = request.POST.getlist('categories')
-        bags = request.POST.get('bags')
-        org = request.POST.get('organization')
-        address = request.POST.get('address')
-        city = request.POST.get('city')
-        zip_code = request.POST.get('postcode')
-        phone_number = request.POST.get('phone')
-        pick_up_date = request.POST.get('data')
-        pick_up_time = request.POST.get('time')
-        pick_up_comment = request.POST.get('more_info')
-        user_don = request.user
-        cat_list = [Category.objects.get(pk=cat) for cat in categories]
-        institution = Institution.objects.get(pk=org)
-        new_donation = Donation.objects.create(quantity=bags, institution=institution,
-                                               address=address, phone_number=phone_number, city=city, zip_code=zip_code,
-                                               pick_up_date=pick_up_date, pick_up_time=pick_up_time,
-                                               pick_up_comment=pick_up_comment, user=user_don)
-        new_donation.categories.add(categories)
-        new_donation.save()
+        org = request.POST.get('institution')
+        new_don_dict = {key: value for key, value in request.POST.items() if key != "categories"
+                        and key != "institution" and key != 'csrfmiddlewaretoken'}
+        new_don_dict['institution'] = Institution.objects.get(pk=org)
+        new_don_dict['user'] = request.user
+        new_donation = Donation.objects.create(**new_don_dict)
+        for cat in categories:
+            new_donation.categories.add(cat)
+            new_donation.save()
         return redirect('donation_confirmation')
 
 
@@ -127,6 +151,10 @@ class Login(View):
                     'form': form
                 }
                 return render(request=request, template_name='login.html', context=ctx)
+        ctx = {
+            'form': form
+        }
+        return render(request=request, template_name='login.html', context=ctx)
 
 
 class LogoutView(View):
@@ -144,3 +172,10 @@ class UserProfileView(LoginRequiredMixin, View):
             "donations": donations
         }
         return render(request=request, template_name="user_profile.html", context=ctx)
+
+    def post(self, request):
+        status_change = request.POST.get('don_status')
+        donation = Donation.objects.get(pk=status_change)
+        donation.is_taken = -donation.is_taken
+        donation.save()
+        return render(request=request, template_name="user_profile.html")

@@ -102,10 +102,9 @@
 
             {% for i in charities_found.paginator.page_range %}
               {% if charities_found.number == i %}
-                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border active" data-page="{{ i }}">{{ i }}</a></li>
+                <li><a href="?page={{ i }}#help" class="btn btn--small btn--without-border active" data-page="{{ i }}">{{ i }}</a></li>
                 {% else %}
-{#                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>#}
-                <li><a href="?page={{ i }}#help" data-page="{{ i }}">{{ i }}</a></li>
+                <li><a href="?page={{ i }}#help" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>
 
               {% endif %}
             {% endfor %}
@@ -153,7 +152,7 @@
                 <li><a href="?page={{ i }}" class="btn btn--small btn--without-border active" data-page="{{ i }}">{{ i }}</a></li>
                 {% else %}
 {#                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>#}
-                <li><a href="?page={{ i }}#help" data-page="{{ i }}">{{ i }}</a></li>
+                <li><a href="?page={{ i }}#help" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>
 
               {% endif %}
             {% endfor %}
@@ -190,7 +189,7 @@
                 <li><a href="?page={{ i }}" class="btn btn--small btn--without-border active" data-page="{{ i }}">{{ i }}</a></li>
                 {% else %}
 {#                <li><a href="?page={{ i }}" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>#}
-                <li><a href="?page={{ i }}#help" data-page="{{ i }}">{{ i }}</a></li>
+                <li><a href="?page={{ i }}#help" class="btn btn--small btn--without-border" data-page="{{ i }}">{{ i }}</a></li>
 
               {% endif %}
             {% endfor %}

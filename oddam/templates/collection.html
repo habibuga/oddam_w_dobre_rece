@@ -1,0 +1,10 @@
+{% for charity in charities_collection %}
+  <li>
+    <div class="col">
+      <div class="title">{{ charity.name }}</div>
+      <div class="subtitle">Cel i misja: {{ charity.description }}</div>
+    </div>
+
+    <div class="col"><div class="text">{{ charity.category_names }}</div></div>
+  </li>
+{% endfor %}

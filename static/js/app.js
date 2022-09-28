@@ -61,9 +61,34 @@ document.addEventListener("DOMContentLoaded", function() {
      */
     changePage(e) {
       e.preventDefault();
+      e.target.parentElement.parentElement.childNodes.forEach(elem => {
+        if (elem.tagName === "LI") {
+          elem.firstChild.classList.remove("active");
+        }
+      });
+
+      e.target.classList.add('active');
       const page = e.target.dataset.page;
 
       console.log(page);
+
+      if (this.currentSlide === "1") {
+        fetch(`fundacja/${page}/`).then((response) => {
+        return response.text()
+      }).then((response) => {
+        e.target.parentElement.parentElement.parentElement.children[1].innerHTML=response;
+      }) } else if (this.currentSlide === "2") {
+        fetch(`ngo/${page}/`).then((response) => {
+        return response.text()
+      }).then((response) => {
+        e.target.parentElement.parentElement.parentElement.children[1].innerHTML=response;
+        }) } else {
+        fetch(`zbiorka/${page}/`).then((response) => {
+        return response.text()
+      }).then((response) => {
+        e.target.parentElement.parentElement.parentElement.children[1].innerHTML=response;
+        })
+      }
     }
   }
   const helpSection = document.querySelector(".help");
@@ -234,6 +259,26 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 6;
       this.$step.parentElement.hidden = this.currentStep >= 6;
 
+      this.catBoxes = form.querySelectorAll('input[name="categories"]:checked')
+      this.catValues = [];
+      this.catBoxes.forEach((checkbox) => {
+        this.catValues.push(checkbox.value);
+      })
+      console.log(this.catValues);
+
+      this.org = form.querySelectorAll("[data-category]");
+      this.org.forEach((el) => {
+        el.style.display = "inherit"
+      })
+      this.org.forEach((elem) => {
+        this.catValues.forEach((cat) => {
+          if (elem.dataset.category.includes(cat) === false) {
+            elem.style.display = "none"
+          }
+        })
+      })
+      console.log(this.org);
+
       // TODO: get data from inputs and show them in summary
     }
 
@@ -243,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function() {
      * TODO: validation, send data to server
      */
     submit(e) {
-      e.preventDefault();
+      // e.preventDefault();
       this.currentStep++;
       this.updateForm();
     }

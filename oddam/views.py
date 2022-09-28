@@ -8,10 +8,12 @@ class LandingPage(View):
         bags = 0
         for donation in Donation.objects.all():
             bags += donation.quantity
-        charities = Institution.objects.count()
+        charities_number = Institution.objects.count()
+        charities_org = Institution.objects.all()
         ctx = {
             "bags_num": bags,
-            "charity_num": charities
+            "charity_num": charities_number,
+            "charities": charities_org
         }
         return render(request=request, template_name='index.html', context=ctx)
 

@@ -23,4 +23,23 @@
         </tr>
     </table>
 
+    <h3>Lista przekazanych darów</h3>
+
+    <table>
+        <tr>
+            <th>Data odbioru</th>
+            <th>Organizacja</th>
+            <th>Kategorie</th>
+            <th>Ilość worków</th>
+        </tr>
+        {% for don in donations %}
+        <tr>
+            <td>{{ don.pick_up_date }}</td>
+            <td>{{ don.institution }}</td>
+            <td>{{ don.category_names }}</td>
+            <td>{{ don.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
 {% endblock %}

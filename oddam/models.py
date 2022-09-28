@@ -44,3 +44,6 @@ class Donation(models.Model):
     pick_up_time = models.TimeField(verbose_name="godzina odbioru")
     pick_up_comment = models.CharField(max_length=500, verbose_name="komentarz")
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name="darczyńca")
+
+    def category_names(self):
+        return ', '.join([c.name for c in self.categories.all()])

@@ -1,31 +1,16 @@
 {% extends 'base.html' %}
 {% block header %}
-    <header class="header--main-page">
-      <nav class="container container--70">
-        <ul class="nav--actions">
-          <li><a href="" class="btn btn--small btn--without-border">Zaloguj</a></li>
-          <li><a href="#" class="btn btn--small btn--highlighted">Załóż konto</a></li>
-        </ul>
-
-        <ul>
-          <li><a href="{% url 'start' %}" class="btn btn--without-border active">Start</a></li>
-          <li><a href="{% url 'start' %}#steps" class="btn btn--without-border">O co chodzi?</a></li>
-          <li><a href="{% url 'start' %}#about-us" class="btn btn--without-border">O nas</a></li>
-          <li><a href="{% url 'start' %}#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-          <li><a href="{% url 'add_donation' %}" class="btn btn--without-border">Przekaż dary</a></li>
-          <li><a href="{% url 'start' %}#contact" class="btn btn--without-border">Kontakt</a></li>
-        </ul>
-      </nav>
-
-      <div class="slogan container container--90">
-        <div class="slogan--item">
-          <h1>
-            Zacznij pomagać!<br />
-            Oddaj niechciane rzeczy w zaufane ręce
-          </h1>
-        </div>
-      </div>
-    </header>
+<header class="header--main-page">
+    {{ block.super }}
+  <div class="slogan container container--90">
+    <div class="slogan--item">
+      <h1>
+        Zacznij pomagać!<br />
+        Oddaj niechciane rzeczy w zaufane ręce
+      </h1>
+    </div>
+  </div>
+</header>
 {% endblock %}
 {% block content %}
     <section id="stats" class="stats">
@@ -71,7 +56,7 @@
         </div>
       </div>
 
-      <a href="#" class="btn btn--large">Załóż konto</a>
+      <a href="{% url 'registration' %}" class="btn btn--large">Załóż konto</a>
     </section>
 
     <section id="about-us" class="about-us">

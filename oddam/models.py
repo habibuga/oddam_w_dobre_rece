@@ -24,6 +24,13 @@ class Institution(models.Model):
     def category_names(self):
         return ', '.join([c.name for c in self.categories.all()])
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Organizcja charytatywna"
+        verbose_name_plural = "Organizacje charytatywne"
+
 
 class Donation(models.Model):
     quantity = models.IntegerField(verbose_name="liczba worków")

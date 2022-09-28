@@ -42,10 +42,41 @@ class AddDonation(LoginRequiredMixin, View):
 
     def get(self, request):
         categories = Category.objects.all()
+        organizations = Institution.objects.all()
         ctx = {
             "categories": categories,
+            "organizations": organizations,
         }
         return render(request=request, template_name='form.html', context=ctx)
+
+    def post(self, request):
+        categories = request.POST.getlist('categories')
+        bags = request.POST.get('bags')
+        org = request.POST.get('organization')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        zip_code = request.POST.get('postcode')
+        phone_number = request.POST.get('phone')
+        pick_up_date = request.POST.get('data')
+        pick_up_time = request.POST.get('time')
+        pick_up_comment = request.POST.get('more_info')
+        user_don = request.user
+        cat_list = [Category.objects.get(pk=cat) for cat in categories]
+        institution = Institution.objects.get(pk=org)
+        new_donation = Donation.objects.create(quantity=bags, categories=cat_list, institution=institution,
+                                               address=address, phone_number=phone_number, city=city, zip_code=zip_code,
+                                               pick_up_date=pick_up_date, pick_up_time=pick_up_time,
+                                               pick_up_comment=pick_up_comment, user=user_don)
+        new_donation.save()
+        return redirect('donation_confirmation')
+
+
+class DonationConfirmation(LoginRequiredMixin, View):
+    login_url = 'login'
+    # redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        return render(request=request, template_name='form-confirmation.html')
 
 
 class Register(View):

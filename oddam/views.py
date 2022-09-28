@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login, get_user_model, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import NewUserForm, LoginForm
-from .models import Donation, Institution
+from .models import Donation, Institution, Category
 
 User = get_user_model()
 
@@ -35,9 +36,16 @@ class LandingPage(View):
         return render(request=request, template_name='index.html', context=ctx)
 
 
-class AddDonation(View):
+class AddDonation(LoginRequiredMixin, View):
+    login_url = 'login'
+    # redirect_field_name = 'redirect_to'
+
     def get(self, request):
-        return render(request=request, template_name='form.html')
+        categories = Category.objects.all()
+        ctx = {
+            "categories": categories,
+        }
+        return render(request=request, template_name='form.html', context=ctx)
 
 
 class Register(View):
